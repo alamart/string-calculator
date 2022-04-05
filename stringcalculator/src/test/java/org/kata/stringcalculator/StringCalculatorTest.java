@@ -1,6 +1,9 @@
 package org.kata.stringcalculator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -33,5 +36,13 @@ public class StringCalculatorTest {
 	@Test
     void assertShouldReturn3For1And2AndDefaultDelimiter() {
         assertEquals(StringCalculator.add("//;\n1;2"), 3);
+    }
+	
+	@Test
+    void shouldThrowErrorForNewlineAfterComma() {
+		IllegalArgumentException thrownException = assertThrows(IllegalArgumentException.class, () ->{
+			StringCalculator.add("-1,35,-5\n-8");
+		});
+		assertEquals("negatives not allowed " + List.of(-1,-5,-8).toString(), thrownException.getMessage());
     }
 }

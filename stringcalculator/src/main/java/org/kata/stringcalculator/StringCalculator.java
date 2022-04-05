@@ -1,5 +1,6 @@
 package org.kata.stringcalculator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +23,22 @@ public class StringCalculator {
 
 	private static int addNumbers(String numbers, String delimiter) {
 		List<String> numbersList = splitNumbers(numbers, delimiter);
-		return numbersList.stream().map(Integer::valueOf).reduce(0, (acc, current) -> acc+current);
+		int answer = 0;
+		List<Integer> allNegatives = new ArrayList<>();
+		for (String numberString : numbersList) {
+			int number = Integer.valueOf(numberString);
+			if(number < 0) {
+				allNegatives.add(number);
+			}
+			if(!allNegatives.isEmpty()) {
+				continue;
+			}
+			answer += number;
+		}
+		if (!allNegatives.isEmpty()) {
+			throw new IllegalArgumentException("negatives not allowed " + allNegatives.toString());
+		}
+		return answer;
 	}
 	
 	private static boolean isZeroSum(String numbers) {
@@ -44,4 +60,5 @@ public class StringCalculator {
 		}
 		return "";
 	}
+	
 }
