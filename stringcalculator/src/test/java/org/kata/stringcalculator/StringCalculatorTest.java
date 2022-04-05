@@ -29,4 +29,9 @@ public class StringCalculatorTest {
     void assertShouldReturn6For1AndNewlineCharAnd2And3() {
         assertEquals(StringCalculator.add("1\n2,3"), 6);
     }
+
+	@Test
+    void assertShouldReturn3For1And2AndDefaultDelimiter() {
+        assertEquals(StringCalculator.add("//;\n1;2"), 3);
+    }
 }
